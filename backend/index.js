@@ -1,7 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const app = express();
+app.use(cors());
 const PORT = 5000;
+app.use(express.json());
 
 mongoose.connect("mongodb://localhost:27017/DB_CasesPrice").then(
   () => {
@@ -13,10 +16,9 @@ mongoose.connect("mongodb://localhost:27017/DB_CasesPrice").then(
 );
 
 const caserRouter = require("./route/caseData");
-app.use(express.json());
 
 app.use("/cases", caserRouter);
 // getdData();
-app.listen(PORT, () => {
+app.listen(PORT || 5000, () => {
   console.log(`server listen to PORT ${PORT}`);
 });

@@ -1,29 +1,27 @@
 const axios = require("axios");
 const caseModel = require("../model/caseSchema");
 const cases = [
-  //   "Snakebite",
-  //   "Fracture",
+  "Snakebite",
+  "Fracture",
   "Prisma",
-  //   "CS20",
-  //   "Prisma 2",
-  //   "Danger",
-  //   "Horizon",
+  "CS20",
+  "Prisma 2",
+  "Horizon",
   "Clutch",
-  //   "Spectrum",
-  //   "Spectrum 2",
+  "Spectrum",
+  "Spectrum 2",
   "Glove",
   "Gamma",
-  //   "Gamma 2",
-  //   "Chroma",
-  //   "Chroma",
-  //   "Chroma 2",
-  //   "Chroma 3",
-  //   "Revolver",
-  //   "Shadow",
-  //   "Falchion",
+  "Gamma 2",
+  "Chroma",
+  "Chroma 2",
+  "Chroma 3",
+  "Revolver",
+  "Shadow",
+  "Falchion",
 ];
 
-const getAllPrice = (req, res) => {
+const postAllPrice = (req, res) => {
   const result = [];
   const repeat = async (index) => {
     const responce = await axios.get(
@@ -49,4 +47,19 @@ const getAllPrice = (req, res) => {
   };
   repeat(0);
 };
-module.exports = { getAllPrice };
+const getAllPrice = (req, res) => {
+  caseModel
+    .find({})
+    .then((result) => {
+      res.status(200).json({
+        success: true,
+        message: "All cases",
+        cases: result,
+      });
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+};
+
+module.exports = { postAllPrice, getAllPrice };
