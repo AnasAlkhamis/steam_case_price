@@ -38,7 +38,7 @@ const postAllPrice = (req, res) => {
         } else {
           setTimeout(() => {
             repeat(index + 1);
-          }, 300);
+          }, 500);
         }
       })
       .catch((err) => {
@@ -49,7 +49,7 @@ const postAllPrice = (req, res) => {
 };
 const getAllPrice = (req, res) => {
   caseModel
-    .find({})
+    .find()
     .then((result) => {
       res.status(200).json({
         success: true,
