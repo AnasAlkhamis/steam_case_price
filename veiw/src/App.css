@@ -1,5 +1,31 @@
-
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 body {
   color: white;
-  background-color: black;
+  background-color: rgb(178, 243, 175);
+  color: rgb(54, 51, 51);
+}
+.chat_box {
+  width: 70%;
+  /* margin: 0 auto; */
+}
+.img_box {
+ padding: 10px;
+}
+.img_box img {
+
+  height: 70%;
+}
+.cases ul li {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.cases ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

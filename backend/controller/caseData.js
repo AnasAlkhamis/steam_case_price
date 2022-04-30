@@ -1,6 +1,7 @@
 const axios = require("axios");
 const caseModel = require("../model/caseSchema");
 const cases = [
+  "Falchion",
   "Snakebite",
   "Fracture",
   "Prisma",
@@ -18,7 +19,6 @@ const cases = [
   "Chroma 3",
   "Revolver",
   "Shadow",
-  "Falchion",
 ];
 
 const postAllPrice = (req, res) => {
@@ -27,23 +27,27 @@ const postAllPrice = (req, res) => {
     const responce = await axios.get(
       `https://steamcommunity.com/market/priceoverview/?appid=730&currency=1&market_hash_name=${cases[index]}%20Case`
     );
-    responce.data.case = cases[index];
-    const newCase = new caseModel(responce.data);
-    result.push(newCase);
-    newCase
-      .save()
-      .then((Done) => {
-        if (index == cases.length - 1) {
-          res.status(200).json(result);
-        } else {
-          setTimeout(() => {
-            repeat(index + 1);
-          }, 500);
-        }
-      })
-      .catch((err) => {
-        res.json(err);
-      });
+    if (!responce.error) {
+      responce.data.case = cases[index];
+      const newCase = new caseModel(responce.data);
+      result.push(newCase);
+      newCase
+        .save()
+        .then((Done) => {
+          if (index !== cases.length - 1) {
+            setTimeout(() => {
+              repeat(index + 1);
+            }, 10000);
+          } else {
+            return res.status(200).json(result);
+          }
+        })
+        .catch((err) => {
+          return res.json(err);
+        });
+    } else {
+      repeat(index + 1);
+    }
   };
   repeat(0);
 };
@@ -51,14 +55,14 @@ const getAllPrice = (req, res) => {
   caseModel
     .find()
     .then((result) => {
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         message: "All cases",
         cases: result,
       });
     })
     .catch((err) => {
-      res.json(err);
+      return res.json(err);
     });
 };
 

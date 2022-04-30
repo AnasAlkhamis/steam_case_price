@@ -8,21 +8,16 @@ const Case = () => {
   const postCasePrice = async () => {
     try {
       const response = await axios.post("http://localhost:5000/cases");
-
+      console.log();
       setCases([...response.data, ...cases]);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const getAllCasesData = async () => {
     try {
       const response = await axios.get("http://localhost:5000/cases");
-      console.log(response);
       setCases(response.data.cases);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
   useEffect(() => {
     getAllCasesData();
@@ -34,9 +29,7 @@ const Case = () => {
     if (run) {
       postCasePrice();
     }
-
   }, [run]);
-
   const caseNames = [
     "Snakebite",
     "Fracture",

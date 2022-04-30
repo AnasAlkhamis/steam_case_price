@@ -11,7 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-
+import imgCase from "./images/case.png";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -25,13 +25,13 @@ ChartJS.register(
 const Charts = ({ cases }) => {
   const data = {
     labels: cases.map((ele) => {
-      return Number(ele.median_price.slice(1));
+      return Number(ele.median_price.slice(1)) + " $";
     }),
     datasets: [
       {
-        label: "Dataset 1",
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        label: cases.length ? cases[0].case : "Dataset 1",
+        borderColor: "rgb(54, 51, 51)",
+        backgroundColor: "rgb(54, 51, 51)",
         data: cases.map((ele) => {
           return Number(ele.median_price.slice(1));
         }),
@@ -44,13 +44,18 @@ const Charts = ({ cases }) => {
       legend: {
         position: "top",
       },
-      title: {
-        display: true,
-        text: cases.length ? cases[0].case : "chart",
-      },
     },
   };
 
-  return <Line options={options} data={data} height={20} />;
+  return (
+    <>
+      <div className="img_box">
+        <img src={imgCase} />
+      </div>
+      <div className="chat_box">
+        <Line options={options} data={data} height={50} />
+      </div>
+    </>
+  );
 };
 export default Charts;
