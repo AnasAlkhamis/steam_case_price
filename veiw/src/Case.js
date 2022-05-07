@@ -5,31 +5,6 @@ import { useEffect, useState } from "react";
 const Case = () => {
   const [cases, setCases] = useState([]);
   const [run, setrun] = useState(false);
-  const postCasePrice = async () => {
-    try {
-      const response = await axios.post("http://localhost:5000/cases");
-      console.log();
-      setCases([...response.data, ...cases]);
-    } catch (error) {}
-  };
-
-  const getAllCasesData = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/cases");
-      setCases(response.data.cases);
-    } catch (error) {}
-  };
-  useEffect(() => {
-    getAllCasesData();
-  }, []);
-  setTimeout(() => {
-    setrun(!run);
-  }, 10000);
-  useEffect(() => {
-    if (run) {
-      postCasePrice();
-    }
-  }, [run]);
   const caseNames = [
     "Snakebite",
     "Fracture",
@@ -50,6 +25,32 @@ const Case = () => {
     "Shadow",
     "Falchion",
   ];
+  let index = 0;
+  const postCasePrice = async () => {
+    try {
+      const res = await axios.post("http://localhost:5000/cases", {
+        caseName: caseNames[index],
+      });
+      index++;
+      console.log(res);
+      setCases([...cases, ...res.data]);
+      console.log(cases);
+    } catch (error) {}
+  };
+
+  setInterval(() => {
+    postCasePrice();
+  }, 150000);
+  const getAllCasesData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/cases");
+      setCases(response.data.cases);
+    } catch (error) {}
+  };
+  useEffect(() => {
+    getAllCasesData();
+  }, []);
+
   const colaction = [];
   caseNames.map((ele1, i) => {
     colaction[i] = [];
@@ -59,7 +60,6 @@ const Case = () => {
       }
     });
   });
-
   return (
     <div className="cases">
       <ul>
