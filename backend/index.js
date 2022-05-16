@@ -15,9 +15,12 @@ mongoose.connect("mongodb://localhost:27017/DB_CasesPrice").then(
   }
 );
 
-const caserRouter = require("./route/caseData");
+const caseRouter = require("./route/caseData");
+const categoryRouter = require("./route/category");
 
-app.use("/cases", caserRouter);
+app.use("/cases", caseRouter);
+app.use("/category", categoryRouter);
+
 // getdData();
 app.listen(PORT || 5000, () => {
   console.log(`server listen to PORT ${PORT}`);

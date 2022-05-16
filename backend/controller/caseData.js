@@ -5,7 +5,7 @@ const getData = async (req, res, next) => {
   const responce = await axios.get(
     `https://steamcommunity.com/market/priceoverview/?appid=730&currency=1&market_hash_name=${caseName}%20Case`
   );
-  responce.data.case = caseName;
+  responce.data.category = caseName;
   req.body.data = responce.data;
   next();
 };

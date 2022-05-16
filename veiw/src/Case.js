@@ -3,24 +3,25 @@ import Charts from "./Chart";
 
 import { useEffect, useState } from "react";
 const Case = () => {
-  const [cases, setCases] = useState([]);
+  const [cases, setCases] = useState({});
   const [run, setrun] = useState(false);
+  const [falchion, setFalchion] = useState("");
   const caseNames = [
-    "Snakebite",
-    "Fracture",
-    "Prisma",
+    // "Snakebite",
+    // "Fracture",
+    // "Prisma",
     "CS20",
-    "Prisma 2",
-    "Horizon",
+    // "Prisma 2",
+    // "Horizon",
     "Clutch",
-    "Spectrum",
-    "Spectrum 2",
-    "Glove",
-    "Gamma",
-    "Gamma 2",
-    "Chroma",
-    "Chroma 2",
-    "Chroma 3",
+    // "Spectrum",
+    // "Spectrum 2",
+    // "Glove",
+    // "Gamma",
+    // "Gamma 2",
+    // "Chroma",
+    // "Chroma 2",
+    // "Chroma 3",
     "Revolver",
     "Shadow",
     "Falchion",
@@ -33,39 +34,48 @@ const Case = () => {
       });
       index++;
       console.log(res);
-      setCases([...cases, ...res.data]);
-      console.log(cases);
+      // setCases([...cases, ...res.data]);
+      // console.log(cases);
     } catch (error) {}
   };
 
-  setInterval(() => {
-    postCasePrice();
-  }, 150000);
-  const getAllCasesData = async () => {
+  // setInterval(() => {
+  // postCasePrice();
+  // }, 60000);
+  const result = {};
+  const getAllCasesData = async (element, index) => {
     try {
-      const response = await axios.get("http://localhost:5000/cases");
-      setCases(response.data.cases);
+      const response = await axios.get(
+        `http://localhost:5000/category?caseName=${element}`
+      );
+      result[element] = response.data.cases;
+      if (index === caseNames.length - 1) {
+        setCases(result);
+      }
     } catch (error) {}
   };
   useEffect(() => {
-    getAllCasesData();
-  }, []);
-
-  const colaction = [];
-  caseNames.map((ele1, i) => {
-    colaction[i] = [];
-    cases.map((ele2) => {
-      if (ele2.case === ele1) {
-        colaction[i].push(ele2);
-      }
+    caseNames.forEach((element, index) => {
+      getAllCasesData(element, index);
     });
-  });
+  }, []);
+  console.log(cases);
+  // console.log(cases);
+  const colaction = [];
+  // caseNames.map((ele1, i) => {
+  //   colaction[i] = [];
+  //   cases.map((ele2) => {
+  //     if (ele2.case === ele1) {
+  //       colaction[i].push(ele2);
+  //     }
+  //   });
+  // });
   return (
     <div className="cases">
       <ul>
-        {colaction &&
-          colaction.map((ele, i) => {
-            return <li key={i}>{<Charts cases={ele} />}</li>;
+        {caseNames &&
+          caseNames.map((ele, i) => {
+            return <li key={i}>{<Charts cases={cases[ele]} />}</li>;
           })}
       </ul>
     </div>
