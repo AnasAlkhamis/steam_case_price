@@ -35,5 +35,19 @@ const getAllPrice = (req, res) => {
       return res.json(err);
     });
 };
-
-module.exports = { postAllPrice, getAllPrice, getData };
+const getCasesByCategoryId = (req, res) => {
+  const category = req.query.category;
+  caseModel
+    .find({ category })
+    .then((result) => {
+      return res.status(200).json({
+        success: true,
+        message: `All cases with category name ${category}`,
+        cases: result,
+      });
+    })
+    .catch((err) => {
+      return res.json(err);
+    });
+};
+module.exports = { postAllPrice, getAllPrice, getData, getCasesByCategoryId };

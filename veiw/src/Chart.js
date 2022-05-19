@@ -23,7 +23,6 @@ ChartJS.register(
 );
 
 const Charts = ({ cases }) => {
-  console.log(cases);
   const data = {
     labels: cases.map((ele) => {
       return Number(ele.median_price.slice(1)) + " $";
@@ -33,9 +32,11 @@ const Charts = ({ cases }) => {
         label: cases.length ? cases[0].category : "Dataset 1",
         borderColor: "rgb(54, 51, 51)",
         backgroundColor: "rgb(54, 51, 51)",
-        data: cases.map((ele) => {
-          return Number(ele.median_price.slice(1));
-        }),
+        data:
+          cases.length &&
+          cases.map((ele) => {
+            return Number(ele.median_price.slice(1));
+          }),
       },
     ],
   };

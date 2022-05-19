@@ -5,8 +5,10 @@ const {
   postAllPrice,
   getAllPrice,
   getData,
+  getCasesByCategoryId,
 } = require("../controller/caseData");
 caseRouter.post("/", getData, postAllPrice);
-caseRouter.get("/", getAllPrice);
+caseRouter.get("/all", getAllPrice);
+caseRouter.get("/", getCasesByCategoryId);
 
 module.exports = caseRouter;

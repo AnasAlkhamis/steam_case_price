@@ -3,25 +3,23 @@ import Charts from "./Chart";
 
 import { useEffect, useState } from "react";
 const Case = () => {
-  const [cases, setCases] = useState({});
-  const [run, setrun] = useState(false);
-  const [falchion, setFalchion] = useState("");
+  const [cases, setCases] = useState(null);
   const caseNames = [
-    // "Snakebite",
-    // "Fracture",
-    // "Prisma",
+    "Snakebite",
+    "Fracture",
+    "Prisma",
     "CS20",
-    // "Prisma 2",
-    // "Horizon",
+    "Prisma 2",
+    "Horizon",
     "Clutch",
-    // "Spectrum",
-    // "Spectrum 2",
-    // "Glove",
-    // "Gamma",
-    // "Gamma 2",
-    // "Chroma",
-    // "Chroma 2",
-    // "Chroma 3",
+    "Spectrum",
+    "Spectrum 2",
+    "Glove",
+    "Gamma",
+    "Gamma 2",
+    "Chroma",
+    "Chroma 2",
+    "Chroma 3",
     "Revolver",
     "Shadow",
     "Falchion",
@@ -32,48 +30,42 @@ const Case = () => {
       const res = await axios.post("http://localhost:5000/cases", {
         caseName: caseNames[index],
       });
-      index++;
-      console.log(res);
-      // setCases([...cases, ...res.data]);
-      // console.log(cases);
-    } catch (error) {}
+      if (res) {
+        index++;
+        result[caseNames[index]].push(res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  // setInterval(() => {
-  // postCasePrice();
-  // }, 60000);
+  setInterval(() => {
+    postCasePrice();
+  }, 1200000);
   const result = {};
   const getAllCasesData = async (element, index) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/category?caseName=${element}`
+        `http://localhost:5000/cases?category=${element}`
       );
       result[element] = response.data.cases;
       if (index === caseNames.length - 1) {
         setCases(result);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   useEffect(() => {
     caseNames.forEach((element, index) => {
       getAllCasesData(element, index);
     });
   }, []);
-  console.log(cases);
-  // console.log(cases);
-  const colaction = [];
-  // caseNames.map((ele1, i) => {
-  //   colaction[i] = [];
-  //   cases.map((ele2) => {
-  //     if (ele2.case === ele1) {
-  //       colaction[i].push(ele2);
-  //     }
-  //   });
-  // });
   return (
     <div className="cases">
       <ul>
-        {caseNames &&
+        {cases &&
           caseNames.map((ele, i) => {
             return <li key={i}>{<Charts cases={cases[ele]} />}</li>;
           })}
@@ -82,3 +74,4 @@ const Case = () => {
   );
 };
 export default Case;
+// Games: https://api.rawg.io/api/games?key=57161d95ab644501bfed73cd92025efe
