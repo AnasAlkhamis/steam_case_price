@@ -1,11 +1,11 @@
 const caseModel = require("../model/caseSchema");
 const axios = require("axios");
 const getData = async (req, res, next) => {
-  const { caseName } = req.body;
+  const { category } = req.body;
   const responce = await axios.get(
-    `https://steamcommunity.com/market/priceoverview/?appid=730&currency=1&market_hash_name=${caseName}%20Case`
+    `https://steamcommunity.com/market/priceoverview/?appid=730&currency=1&market_hash_name=${category}%20Case`
   );
-  responce.data.category = caseName;
+  responce.data.category = category;
   req.body.data = responce.data;
   next();
 };
@@ -50,4 +50,23 @@ const getCasesByCategoryId = (req, res) => {
       return res.json(err);
     });
 };
-module.exports = { postAllPrice, getAllPrice, getData, getCasesByCategoryId };
+const removeData = (req, res) => {
+  caseModel
+    .deleteMany({})
+    .then((result) => {
+      return res.status(200).json({
+        success: true,
+        message: `All cases deleted sccessfuly `,
+      });
+    })
+    .catch((err) => {
+      return res.json(err);
+    });
+};
+module.exports = {
+  postAllPrice,
+  getAllPrice,
+  getData,
+  getCasesByCategoryId,
+  removeData,
+};

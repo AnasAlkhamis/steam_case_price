@@ -9,7 +9,7 @@ body {
   color: rgb(54, 51, 51);
 }
 .chat_box {
-  width: 70%;
+  width: 85%;
   /* margin: 0 auto; */
 }
 .img_box {
@@ -17,7 +17,7 @@ body {
 }
 .img_box img {
 
-  height: 70%;
+  height: 100px;
 }
 .cases ul li {
 display: flex;

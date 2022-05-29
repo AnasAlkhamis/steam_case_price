@@ -17,7 +17,9 @@ mongoose.connect("mongodb://localhost:27017/DB_CasesPrice").then(
 
 const caseRouter = require("./route/caseData");
 
+
 app.use("/cases", caseRouter);
+
 
 // getdData();
 app.listen(PORT || 5000, () => {

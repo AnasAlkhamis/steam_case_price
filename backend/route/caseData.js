@@ -6,9 +6,12 @@ const {
   getAllPrice,
   getData,
   getCasesByCategoryId,
+  removeData
 } = require("../controller/caseData");
 caseRouter.post("/", getData, postAllPrice);
 caseRouter.get("/all", getAllPrice);
 caseRouter.get("/", getCasesByCategoryId);
+caseRouter.delete("/", removeData);
+
 
 module.exports = caseRouter;
