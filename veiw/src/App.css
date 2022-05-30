@@ -1,4 +1,4 @@
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -7,25 +7,86 @@ body {
   color: white;
   background-color: rgb(178, 243, 175);
   color: rgb(54, 51, 51);
+  overflow-x: hidden;
 }
-.chat_box {
-  width: 85%;
-  /* margin: 0 auto; */
-}
-.img_box {
- padding: 10px;
-}
-.img_box img {
+.App {
+  display: grid;
+  grid-template-columns: 12vw 85vw;
+  gap: 1vw;
+  grid-template-rows: 100%;
 
-  height: 100px;
+  grid-template-areas: "side main";
 }
-.cases ul li {
-display: flex;
-align-items: center;
-justify-content: center;
+
+.cases {
+  grid-area: main;
 }
+
+.info_box {
+  align-self: flex-start;
+}
+.info_box button,
+.btn {
+  color: rgba(54, 51, 51, 0.849);
+  background-color: rgba(243, 19, 19, 0.532);
+  border: none;
+  font-size: 1rem;
+  padding: 0.3rem 1rem;
+  font-weight: 600;
+  transform: scale(0);
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+.btn {
+  transform: scale(1) translateX(2rem);
+  position: fixed;
+  left: 50%;
+}
+
+.chart_box:hover > .info_box button {
+  transform: scale(1);
+}
+
 .cases ul {
+  width: 100%;
   display: flex;
   flex-direction: column;
+  list-style: none;
   gap: 10px;
+}
+
+.Navbar {
+  position: fixed;
+  grid-area: side;
+  background-color: rgba(0, 0, 0, 0.57);
+}
+.Navbar ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  list-style: none;
+  width: 100%;
+  height: 100vh;
+}
+.Navbar ul li {
+  width: 100%;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 20px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 1rem;
+  color: rgb(178, 243, 175);
+}
+.link img {
+  width: 60px;
+  height: 30px;
+}
+.link span {
+  font-weight: bold;
 }

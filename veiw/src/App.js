@@ -1,13 +1,13 @@
 import "./App.css";
 
-import Case from "./Case";
+import Case from "./component/Case";
+import Navbar from "./component/NavBar";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header"></header>
+      <Navbar />
       <Case />
-      <div></div>
     </div>
   );
 }

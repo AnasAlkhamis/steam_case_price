@@ -1,49 +1,39 @@
 import axios from "axios";
 import Charts from "./Chart";
+import {
+  setData,
+  addData,
+  deleteAllData,
+} from "../component/redux/reducers/data";
+import { useSelector, useDispatch } from "react-redux";
 
 import { useEffect, useState } from "react";
-const caseNames = [
-  "Snakebite",
-  "Fracture",
-  "Prisma",
-  "CS20",
-  "Prisma 2",
-  "Horizon",
-  "Clutch",
-  "Spectrum",
-  "Spectrum 2",
-  "Glove",
-  "Gamma",
-  "Gamma 2",
-  "Chroma",
-  "Chroma 2",
-  "Chroma 3",
-  "Revolver",
-  "Shadow",
-  "Falchion",
-];
+
 const Case = () => {
-  const result = {};
-  const [cases, setCases] = useState(null);
+  const dispatch = useDispatch();
+  const { categories } = useSelector((state) => {
+    return {
+      categories: state.data.categories,
+    };
+  });
   let index = localStorage.getItem("index") ? localStorage.getItem("index") : 0;
 
   const postCasePrice = () => {
     axios
       .post("http://localhost:5000/cases", {
-        category: caseNames[index],
+        category: categories[index],
       })
       .then((res) => {
         if (res.data) {
-          if (cases.length) {
-            setCases([res.data, ...cases]);
-          } else {
-            setCases(res.data);
-          }
+          dispatch(addData(res.data));
+          // const allData = cases;
+          // allData.push(res.data);
           index++;
           localStorage.setItem("index", index);
           setTimeout(() => {
+            // setCases(allData);
             postCasePrice();
-          }, 120000);
+          }, 60000);
         }
       })
       .catch((error) => {
@@ -51,15 +41,15 @@ const Case = () => {
       });
   };
 
-  useEffect(() => {
-    getAllCasesData();
-  }, []);
   const removeData = async () => {
     try {
       const res = await axios.delete("http://localhost:5000/cases");
       if (res) {
-        console.log(res);
-        postCasePrice()
+        dispatch(deleteAllData());
+        // setCases([]);
+        index = 0;
+        localStorage.setItem("index", index);
+        postCasePrice();
       }
     } catch (error) {
       console.log(error);
@@ -70,18 +60,26 @@ const Case = () => {
     try {
       const response = await axios.get(`http://localhost:5000/cases/all`);
       if (response) {
-        setCases(response.data.cases);
-        postCasePrice();
+        console.log(response.data.cases);
+        dispatch(setData(response.data.cases));
+        // setCases(response.data.cases);
+        setTimeout(() => {
+          postCasePrice();
+        }, 60000);
       }
     } catch (error) {
       console.log(error);
     }
   };
-
+  useEffect(() => {
+    getAllCasesData();
+  }, []);
   return (
     <div className="cases">
-      <button onClick={removeData}>clear data</button>
-      <ul>{cases && <Charts cases={cases} caseNames={caseNames} />}</ul>
+      <button className="btn" onClick={removeData}>
+        Clear data
+      </button>
+      <ul>{<Charts />}</ul>
     </div>
   );
 };
