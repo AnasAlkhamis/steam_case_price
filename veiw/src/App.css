@@ -90,3 +90,48 @@ body {
 .link span {
   font-weight: bold;
 }
+.popup_box {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.173);
+  top: 0;
+  left: 0;
+}
+.poup_form {
+  position: relative;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 50%;
+  height: 40%;
+  background-color: rgba(0, 0, 0, 0.614);
+}
+.poup_form h3 {
+  color: rgb(208, 74, 47);
+  font-size: 2rem;
+}
+.but_box {
+  display: flex;
+  gap: 1rem;
+}
+.but_box button {
+  width: 100px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  color: rgba(0, 0, 0, 0.517);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.confirm {
+  background-color: rgb(84, 248, 72);
+}
+.cancel {
+  background-color: rgb(255, 44, 44);
+}

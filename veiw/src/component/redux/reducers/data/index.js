@@ -34,7 +34,7 @@ export const data = createSlice({
     },
 
     deleteData: (state, action) => {
-      state.data = state.articles.filter((ele, index) => {
+      state.data = state.data.filter((ele, index) => {
         return ele.category != action.payload;
       });
     },

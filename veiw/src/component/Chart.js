@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteData } from "../component/redux/reducers/data";
+import Popup from "./Popup";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -24,6 +25,8 @@ ChartJS.register(
 );
 
 const Charts = () => {
+  const [chart, setChart] = useState(false);
+  const [index, setIndex] = useState(null);
   const dispatch = useDispatch();
   const { data, categories } = useSelector((state) => {
     return {
@@ -33,28 +36,19 @@ const Charts = () => {
   });
   const [allCases, setAllCases] = useState([]);
   let dataOnCategory = [];
-console.log(data);
+
   const removeDataByCategory = async (category) => {
     try {
       const res = await axios.delete(`http://localhost:5000/cases/${category}`);
       if (res) {
         dispatch(deleteData(category));
-        // const afterRemove = [];
-        // data.map((ele, idx1) => {
-        //   if (ele.category !== category) {
-        //     afterRemove.push(ele);
-        //   }
-
-        //   if (idx1 === cases.length - 1) {
-        //     setCases(afterRemove);
-        //   }
-        // });
+        setChart(!chart);
       }
     } catch (error) {
       console.log(error);
     }
   };
-  const caseFilter = () => {
+  const filterData = () => {
     categories.map((caseName, idx1) => {
       dataOnCategory[idx1] = [];
       data.map((ele, idx2) => {
@@ -69,12 +63,22 @@ console.log(data);
   };
   useEffect(() => {
     if (data.length) {
-      caseFilter();
+      /* Filtering the data. */
+      filterData();
     }
   }, [data]);
 
   return (
     <>
+      {chart && (
+        <Popup
+          removeDataByCategory={removeDataByCategory}
+          categories={categories}
+          idx={index}
+          chart={chart}
+          setChart={setChart}
+        />
+      )}
       {allCases.length &&
         allCases.map((ele, idx) => {
           return (
@@ -83,7 +87,8 @@ console.log(data);
               <div className="info_box">
                 <button
                   onClick={() => {
-                    removeDataByCategory(categories[idx]);
+                    setChart(!chart);
+                    setIndex(idx);
                   }}
                 >
                   Clear

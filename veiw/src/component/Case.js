@@ -6,38 +6,65 @@ import {
   deleteAllData,
 } from "../component/redux/reducers/data";
 import { useSelector, useDispatch } from "react-redux";
-
+import Popup from "./Popup";
 import { useEffect, useState } from "react";
+const categories = [
+  "Snakebite",
+  "Fracture",
+  "Prisma",
+  "CS20",
+  "Prisma 2",
+  "Horizon",
+  "Clutch",
+  "Spectrum",
+  "Spectrum 2",
+  "Glove",
+  "Gamma",
+  "Gamma 2",
+  "Chroma",
+  "Chroma 2",
+  "Chroma 3",
+  "Revolver",
+  "Shadow",
+  "Falchion",
+];
 
 const Case = () => {
+  const [change, setChange] = useState(true);
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
-  const { categories } = useSelector((state) => {
+  const { data } = useSelector((state) => {
     return {
-      categories: state.data.categories,
+      data: state.data.data,
     };
   });
-  let index = localStorage.getItem("index") ? localStorage.getItem("index") : 0;
 
+  let counet = localStorage.getItem("index") || 0;
   const postCasePrice = () => {
     axios
       .post("http://localhost:5000/cases", {
-        category: categories[index],
+        category: categories[counet],
       })
       .then((res) => {
-        if (res.data) {
-          dispatch(addData(res.data));
-          // const allData = cases;
-          // allData.push(res.data);
-          index++;
-          localStorage.setItem("index", index);
+        if (res.data.success) {
+          counet++;
+          localStorage.setItem("index", counet);
+          if (counet === categories.length - 1) {
+            counet = 0;
+            localStorage.setItem("index", 0);
+          }
           setTimeout(() => {
-            // setCases(allData);
-            postCasePrice();
-          }, 60000);
+            setChange(!change);
+          }, 160000);
+          dispatch(addData(res.data));
         }
       })
+
       .catch((error) => {
         console.log(error);
+        counet++;
+        localStorage.setItem("index", counet);
+        setTimeout(() => setChange(!change), 60000);
       });
   };
 
@@ -46,39 +73,44 @@ const Case = () => {
       const res = await axios.delete("http://localhost:5000/cases");
       if (res) {
         dispatch(deleteAllData());
-        // setCases([]);
-        index = 0;
-        localStorage.setItem("index", index);
+        counet = 0;
+        localStorage.setItem("index", 0);
         postCasePrice();
+        setShow(!show);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getAllCasesData = async (element, index) => {
+  const getAllCasesData = async () => {
     try {
       const response = await axios.get(`http://localhost:5000/cases/all`);
       if (response) {
-        console.log(response.data.cases);
         dispatch(setData(response.data.cases));
-        // setCases(response.data.cases);
-        setTimeout(() => {
-          postCasePrice();
-        }, 60000);
       }
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    getAllCasesData();
-  }, []);
+    if (!data.length) {
+      getAllCasesData();
+    }
+    postCasePrice();
+  }, [change]);
+
   return (
     <div className="cases">
-      <button className="btn" onClick={removeData}>
+      <button
+        className="btn"
+        onClick={() => {
+          setShow(!show);
+        }}
+      >
         Clear data
       </button>
+      {show && <Popup show={show} setShow={setShow} removeData={removeData} />}
       <ul>{<Charts />}</ul>
     </div>
   );

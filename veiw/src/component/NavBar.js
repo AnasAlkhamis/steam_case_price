@@ -28,7 +28,7 @@ const Navbar = () => {
               }}
               key={idx}
             >
-              <div className="link">{ele}</div>
+              <div className="link">{idx+1}_{ele}</div>
             </li>
           );
         })}

@@ -1,13 +1,23 @@
 const caseModel = require("../model/caseSchema");
 const axios = require("axios");
 const getData = async (req, res, next) => {
-  const { category } = req.body;
-  const responce = await axios.get(
-    `https://steamcommunity.com/market/priceoverview/?appid=730&currency=1&market_hash_name=${category}%20Case`
-  );
-  responce.data.category = category;
-  req.body.data = responce.data;
-  next();
+  try {
+    const { category } = req.body;
+    const responce = await axios.get(
+      `https://steamcommunity.com/market/priceoverview/?appid=730&currency=1&market_hash_name=${category}%20Case`
+    );
+    if (responce.data.success) {
+      responce.data.category = category;
+      req.body.data = responce.data;
+      return next();
+    } else throw Error
+  } catch (error) {
+    return res.status(500).json({
+      succes: false,
+      messgae: "Server Erorr",
+      error,
+    });
+  }
 };
 
 const postAllPrice = (req, res) => {
@@ -63,10 +73,25 @@ const removeData = (req, res) => {
       return res.json(err);
     });
 };
+const removeDataById = (req, res) => {
+  const { category } = req.params;
+  caseModel
+    .deleteMany({ category: category })
+    .then((result) => {
+      return res.status(200).json({
+        success: true,
+        message: `All cases with di ${id} deleted sccessfuly `,
+      });
+    })
+    .catch((err) => {
+      return res.json(err);
+    });
+};
 module.exports = {
   postAllPrice,
   getAllPrice,
   getData,
   getCasesByCategoryId,
   removeData,
+  removeDataById,
 };
