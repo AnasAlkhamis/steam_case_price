@@ -7,75 +7,40 @@ import {
 } from "../component/redux/reducers/data";
 import { useSelector, useDispatch } from "react-redux";
 import Popup from "./Popup";
-import { useEffect, useState } from "react";
-const categories = [
-  "Snakebite",
-  "Fracture",
-  "Prisma",
-  "CS20",
-  "Prisma 2",
-  "Horizon",
-  "Clutch",
-  "Spectrum",
-  "Spectrum 2",
-  "Glove",
-  "Gamma",
-  "Gamma 2",
-  "Chroma",
-  "Chroma 2",
-  "Chroma 3",
-  "Revolver",
-  "Shadow",
-  "Falchion",
-];
-
+import { useEffect, useState, useRef } from "react";
+import { io } from "socket.io-client";
+const socket = io.connect("http://localhost:9800");
 const Case = () => {
-  const [change, setChange] = useState(true);
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
+  /* Getting the data from the redux store. */
   const { data } = useSelector((state) => {
     return {
       data: state.data.data,
     };
   });
 
-  let counet = localStorage.getItem("index") || 0;
-  const postCasePrice = () => {
-    axios
-      .post("http://localhost:5000/cases", {
-        category: categories[counet],
-      })
-      .then((res) => {
-        if (res.data.success) {
-          counet++;
-          localStorage.setItem("index", counet);
-          if (counet === categories.length - 1) {
-            counet = 0;
-            localStorage.setItem("index", 0);
-          }
-          setTimeout(() => {
-            setChange(!change);
-          }, 160000);
-          dispatch(addData(res.data));
-        }
-      })
+  /* Listening to the data from the server. */
+  useEffect(() => {
+    socket.on("data", (data) => {
+      dispatch(addData(data));
+    });
 
-      .catch((error) => {
-        console.log(error);
-        counet++;
-        localStorage.setItem("index", counet);
-        setTimeout(() => setChange(!change), 60000);
-      });
-  };
+    return () => socket.removeAllListeners();
+  }, []);
 
+  /* Listening to the disconnect event. */
+  socket.on("disconnect", () => {});
+  /**
+   * It's an async function that uses axios to delete all the data from the database. If the data is
+   * successfully deleted, it dispatches an action to the reducer to update the state and then it sets
+   * the show state to the opposite of what it was
+   */
   const removeData = async () => {
     try {
       const res = await axios.delete("http://localhost:5000/cases");
       if (res) {
         dispatch(deleteAllData());
-        counet = 0;
-        localStorage.setItem("index", 0);
-        postCasePrice();
         setShow(!show);
       }
     } catch (error) {
@@ -83,6 +48,10 @@ const Case = () => {
     }
   };
 
+  /**
+   * It's an async function that makes a GET request to the server, and if the response is successful, it
+   * dispatches the data to the reducer.
+   */
   const getAllCasesData = async () => {
     try {
       const response = await axios.get(`http://localhost:5000/cases/all`);
@@ -93,12 +62,10 @@ const Case = () => {
       console.log(error);
     }
   };
+  /* It's a hook that runs the getAllCasesData function when the component mounts. */
   useEffect(() => {
-    if (!data.length) {
-      getAllCasesData();
-    }
-    postCasePrice();
-  }, [change]);
+    getAllCasesData();
+  }, []);
 
   return (
     <div className="cases">
@@ -116,4 +83,3 @@ const Case = () => {
   );
 };
 export default Case;
-// Games: https://api.rawg.io/api/games?key=57161d95ab644501bfed73cd92025efe
