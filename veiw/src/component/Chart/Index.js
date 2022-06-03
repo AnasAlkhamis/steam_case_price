@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteData } from "../component/redux/reducers/data";
-import Popup from "./Popup";
+import { deleteData } from "../redux/reducers/data";
+import Popup from "../Popup/Index";
 import {
   Chart as ChartJS,
   CategoryScale,

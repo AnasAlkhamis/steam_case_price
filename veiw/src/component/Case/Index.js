@@ -1,12 +1,12 @@
 import axios from "axios";
-import Charts from "./Chart";
+import Charts from "../Chart/Index";
 import {
   setData,
   addData,
   deleteAllData,
-} from "../component/redux/reducers/data";
+} from "../../component/redux/reducers/data";
 import { useSelector, useDispatch } from "react-redux";
-import Popup from "./Popup";
+import Popup from "../Popup/Index";
 import { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 const socket = io.connect("http://localhost:9800");
