@@ -30,29 +30,28 @@ const register = async (req, res) => {
   }
 };
 const findUser = async (req, res, next) => {
-  console.log(req.method);
+
   try {
     const find = await usersModel.findOne();
-    if (find) {
+    if (!find) {
+      if (req.method == "POST") {
+        next();
+      } else {
+        return res.status(200).json({
+          success: false,
+          message: "there is no user",
+        });
+      }
+    } else if (find) {
       return res.status(200).json({
         success: true,
         message: "there is already a user",
-      });
-    } else {
-      if (req.method === post) {
-        next();
-        return;
-      }
-      return res.status(200).json({
-        success: false,
-        message: "there is no user",
       });
     }
   } catch (error) {
     res.status(500).json({
       success: false,
       message: `Server Error`,
-      err: err.message,
     });
   }
 };

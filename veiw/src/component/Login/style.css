@@ -1,0 +1,35 @@
+.Form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.57);
+}
+.Form form {
+  width: 50%;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* background-color: aliceblue; */
+  gap: 1rem;
+  font-size: 1rem;
+}
+.Form form input,
+.Form form button {
+  font-size: 1rem;
+  width: 50%;
+  padding: 1rem 0.5rem;
+  border: none;
+}
+.Form form input:focus {
+  outline: none;
+}
+.Form form button {
+  cursor: pointer;
+  width: 20%;
+  background-color: rgb(178, 243, 175);
+}

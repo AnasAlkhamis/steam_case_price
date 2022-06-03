@@ -11,15 +11,13 @@ import { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 const socket = io.connect("http://localhost:9800");
 const Case = () => {
-  const [show, setShow] = useState(false);
-  const dispatch = useDispatch();
-  /* Getting the data from the redux store. */
-  const { data } = useSelector((state) => {
+  const { token } = useSelector((state) => {
     return {
-      data: state.data.data,
+      token: state.auth.token,
     };
   });
-
+  const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
   /* Listening to the data from the server. */
   useEffect(() => {
     socket.on("data", (data) => {
@@ -38,7 +36,11 @@ const Case = () => {
    */
   const removeData = async () => {
     try {
-      const res = await axios.delete("http://localhost:5000/cases");
+      const res = await axios.delete("http://localhost:5000/cases", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (res) {
         dispatch(deleteAllData());
         setShow(!show);
@@ -54,7 +56,11 @@ const Case = () => {
    */
   const getAllCasesData = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/cases/all`);
+      const response = await axios.get(`http://localhost:5000/cases/all`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response) {
         dispatch(setData(response.data.cases));
       }
