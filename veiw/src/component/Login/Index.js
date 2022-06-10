@@ -1,4 +1,4 @@
-import React, {  useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 
@@ -89,6 +89,9 @@ const Login = () => {
   useEffect(() => {
     if (!isLoggedIn) {
       checkuser();
+    }
+    if (isLoggedIn) {
+      history("/chart");
     }
   }, []);
 

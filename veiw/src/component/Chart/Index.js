@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteData } from "../redux/reducers/data";
-import Popup from "../Popup/Index";
+import Popup from "../confirmPopup/Index";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -28,16 +28,12 @@ const Charts = () => {
   const [chart, setChart] = useState(false);
   const [index, setIndex] = useState(null);
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => {
-    return {
-      token: state.data.token,
-    };
-  });
   /* Destructuring the data and categories from the state. */
-  const { data, categories } = useSelector((state) => {
+  const { data, categories, token } = useSelector((state) => {
     return {
       data: state.data.data,
       categories: state.data.categories,
+      token: state.auth.token,
     };
   });
   const [allCases, setAllCases] = useState([]);
@@ -149,7 +145,7 @@ const Charts = () => {
                       },
                     ],
                   }}
-                  height={45}
+                  height={65}
                 />
               </div>
             </li>

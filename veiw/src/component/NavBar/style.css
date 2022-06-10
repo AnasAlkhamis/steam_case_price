@@ -1,38 +1,47 @@
-.logout_btn {
+.btn_nav {
   width: 100%;
   font-size: 1rem;
   background-color: rgb(131, 130, 130);
   padding: 1rem 0.5rem;
   border: none;
   cursor: pointer;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   color: rgb(178, 243, 175);
+}
+.logout {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 0;
 }
 .Navbar {
   position: fixed;
   grid-area: side;
+  height: 100%;
   width: 10%;
   background-color: rgba(0, 0, 0, 0.57);
 }
+.Navbar ul::-webkit-scrollbar {
+  display: none;
+}
+
 .Navbar ul {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 2rem;
   align-items: flex-start;
   list-style: none;
   width: 100%;
-  height: 100vh;
-  padding: 0.7rem 0;
+  height: 85vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  margin: 0 auto;
 }
 .Navbar ul li {
   width: 100%;
 }
 
 .link {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 5px 20px;
+  padding-left: 0.5rem;
   width: 100%;
   cursor: pointer;
   font-size: 1rem;

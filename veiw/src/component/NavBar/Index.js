@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { scroller } from "react-scroll";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../redux/reducers/auth";
+import { logout, setShow } from "../redux/reducers/auth";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
+
 const Navbar = () => {
   const history = useNavigate();
   const dispatch = useDispatch();
@@ -24,13 +25,12 @@ const Navbar = () => {
   return (
     <div className="Navbar">
       <button
-        className="logout_btn"
+        className="btn_nav"
         onClick={() => {
-          dispatch(logout());
-          history("/");
+          dispatch(setShow());
         }}
       >
-        Logout
+        Add User
       </button>
       <ul>
         {categories.map((ele, idx) => {
@@ -41,13 +41,22 @@ const Navbar = () => {
               }}
               key={idx}
             >
-              <div className="link">
+              <span className="link">
                 {idx + 1}_{ele}
-              </div>
+              </span>
             </li>
           );
         })}
       </ul>
+      <button
+        className="btn_nav logout"
+        onClick={() => {
+          dispatch(logout());
+          history("/");
+        }}
+      >
+        Logout
+      </button>
     </div>
   );
 };

@@ -5,6 +5,7 @@ export const auth = createSlice({
   initialState: {
     token: localStorage.getItem("token") || "",
     isLoggedIn: localStorage.getItem("token") ? true : false,
+    show: false,
   },
   reducers: {
     login: (state, action) => {
@@ -17,9 +18,12 @@ export const auth = createSlice({
       state.isLoggedIn = false;
       localStorage.clear();
     },
+    setShow: (state, action) => {
+      state.show = !state.show;
+    },
   },
 });
 
-export const { login, logout } = auth.actions;
+export const { login, logout, setShow } = auth.actions;
 
 export default auth.reducer;

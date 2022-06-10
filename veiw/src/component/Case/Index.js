@@ -6,13 +6,15 @@ import {
   deleteAllData,
 } from "../../component/redux/reducers/data";
 import { useSelector, useDispatch } from "react-redux";
-import Popup from "../Popup/Index";
+import Popup from "../confirmPopup/Index";
 import { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
+import Register from "../registerPopup";
 const socket = io.connect("http://localhost:9800");
 const Case = () => {
-  const { token } = useSelector((state) => {
+  const { token, showRegister } = useSelector((state) => {
     return {
+      showRegister: state.auth.show,
       token: state.auth.token,
     };
   });
@@ -75,6 +77,7 @@ const Case = () => {
 
   return (
     <div className="cases">
+      {showRegister && <Register />}
       <button
         className="btn"
         onClick={() => {
