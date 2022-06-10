@@ -43,7 +43,6 @@ const getData = async (category) => {
         index = 0;
       }
       responce.data.category = category;
-      console.log(responce.data);
 
       const newCase = new caseModel(responce.data);
       const data = await newCase.save();

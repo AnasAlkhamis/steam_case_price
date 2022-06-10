@@ -4,10 +4,12 @@ import Case from "./component/Case/Index";
 import Navbar from "./component/NavBar/Index";
 import Login from "./component/Login/Index";
 
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 function App() {
+  const history = useNavigate();
+
   const { isLoggedIn } = useSelector((state) => {
     return {
       isLoggedIn: state.auth.isLoggedIn,
@@ -35,6 +37,14 @@ function App() {
             }
           />
         )}
+        <Route
+          path="*"
+          element={
+            <>
+              <Login />
+            </>
+          }
+        />
       </Routes>
     </div>
   );
