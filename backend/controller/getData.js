@@ -40,6 +40,7 @@ const getData = async (category) => {
     if (responce.data.success) {
       index++;
       if (index === categories.length) {
+        
         index = 0;
       }
       responce.data.category = category;
