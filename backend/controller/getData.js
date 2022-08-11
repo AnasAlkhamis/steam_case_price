@@ -38,7 +38,7 @@ const getData = async (category) => {
       `https://steamcommunity.com/market/priceoverview/?appid=730&currency=1&market_hash_name=${category}%20Case`
     );
     if (responce.data.success) {
-      index++;
+      ++index;
       if (index === categories.length) {
         
         index = 0;
@@ -47,12 +47,13 @@ const getData = async (category) => {
 
       const newCase = new caseModel(responce.data);
       const data = await newCase.save();
-      if (connected) {
+      if (true) {
         io.emit("data", data);
+        console.log(data);
       }
     }
   } catch (error) {
-    index++;
+    ++index;
     if (index === categories.length) {
       index = 0;
     }

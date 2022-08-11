@@ -8,14 +8,6 @@ app.use(express.json());
 const PORT = process.env.PORT;
 require("./controller/getData");
 
-mongoose.connect(process.env.DB_URI).then(
-  () => {
-    console.log("DB connected");
-  },
-  (err) => {
-    console.log(err);
-  }
-);
 const caseRouter = require("./route/caseData");
 const userRouter = require("./route/users");
 
@@ -26,4 +18,12 @@ app.listen(PORT || 5000, () => {
   console.log(`server listen to PORT ${PORT}`);
 });
 
+mongoose.connect(process.env.DB_URI).then(
+  () => {
+    console.log("DB connected");
+  },
+  (err) => {
+    console.log("err", err);
+  }
+);
 module.exports = app;

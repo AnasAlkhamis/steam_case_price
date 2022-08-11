@@ -14,7 +14,7 @@ const Popup = ({
     <>
       <div className="popup_box">
         <div className="poup_form">
-          <h3>Are sure you want to clear the data</h3>
+          <h3>Are you sure you want to clear the data</h3>
           <div className="but_box">
             <button
               onClick={() => {

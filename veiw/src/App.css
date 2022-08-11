@@ -57,7 +57,6 @@ body {
   gap: 10px;
 }
 
-
 .popup_box {
   position: fixed;
   width: 100vw;
@@ -107,7 +106,12 @@ body {
   font-weight: 600;
   cursor: pointer;
 }
-
+.inputs {
+  display: flex;
+}
+.inputs input {
+  width: 50px;
+}
 .confirm {
   background-color: rgb(84, 248, 72);
 }
