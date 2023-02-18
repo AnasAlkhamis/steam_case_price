@@ -45,7 +45,7 @@ const Charts = () => {
   const removeDataByCategory = async (category) => {
     try {
       const res = await axios.delete(
-        `http://localhost:5000/cases/${category}`,
+        `https://steam-bot.onrender.com//cases/${category}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

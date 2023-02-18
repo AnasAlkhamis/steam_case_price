@@ -29,7 +29,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5000/users/login", {
+      const res = await axios.post("https://steam-bot.onrender.com//users/login", {
         userName,
         passwordOne,
         passwordTwo,
@@ -50,7 +50,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5000/users/register", {
+      const res = await axios.post("https://steam-bot.onrender.com//users/register", {
         userName,
         passwordOne,
         passwordTwo,
@@ -69,7 +69,7 @@ const Login = () => {
 
   const checkuser = async (e) => {
     try {
-      const res = await axios.get("http://localhost:5000/users");
+      const res = await axios.get("https://steam-bot.onrender.com//users");
       if (res.data) {
         if (!res.data.success) {
           setMessage("please create a new user to be able to login");

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js",
+    "dev": "nodemon -L index.js",
     "start": "node index.js"
   },
   "keywords": [],
@@ -19,6 +19,8 @@
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.1",
+    "nodemon": "^2.0.19",
+    "react-icons": "^4.4.0",
     "socket.io": "^4.5.1"
   }
 }

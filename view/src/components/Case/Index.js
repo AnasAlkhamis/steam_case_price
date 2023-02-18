@@ -38,7 +38,7 @@ const Case = () => {
    */
   const removeData = async () => {
     try {
-      const res = await axios.delete("http://localhost:5000/cases", {
+      const res = await axios.delete("https://steam-bot.onrender.com//cases", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -58,7 +58,7 @@ const Case = () => {
    */
   const getAllCasesData = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/cases/all`, {
+      const response = await axios.get(`https://steam-bot.onrender.com//cases/all`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

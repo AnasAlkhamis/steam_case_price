@@ -1,0 +1,72 @@
+#  In some networked environments (such as a container running nodemon reading across a mounted drive), you will need to use the legacyWatch: true which enables Chokidar's polling.
+# -------------------------------------
+# Creating a container for  backend + fronend + database.
+# use the last version of docker-compose.
+version: "3.8"
+services:
+  # Each service is a separate container.
+  veiw:
+    # Create an image for the frontend.
+    # With build keyword we can bild an image by setting the workdirectory as a value of build.
+    depends_on:
+      - backend
+    build: ./view
+    # Sets ports fore each container.
+    ports:
+      - 3000:3000
+    # when you update something locally it can get reflected in the container also.
+    #volumes lets you mount your local files into the container.
+    volumes:
+      - ./veiw:/app
+      - /app/node_modules
+    # restart: always
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      # NODE_ENV: development
+    stdin_open: true
+  backend:
+    depends_on:
+      - db
+    # create an image for the backend
+    build: ./backend
+    restart: always
+    # when you update something locally it can get reflected in the container also
+    # sync -path to folder on local machine:path to folder on container 
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+    ports:
+      - 5000:5000
+      - 9800:9800
+   
+    environment:
+      PORT: 5000
+      #   # environment uses to write the enviroment variabels semelare to dotend file
+      #   # mongodb url start with mongodb then database container name and the name of the database.
+      DB_URL: mongodb://db:27017/DB_CasesPrice
+
+ 
+    # env_file: if need to add .env file
+    #   - fileName 
+  db:
+    # create an image for the database
+    image: mongo:4.0-xenial
+    ports:
+      - 0.0.0.0:27017:27017
+    restart: always
+    volumes:
+      # volumes where we create directory inside the container where the dataabse saves all data
+      - casesPrice:/data/db #create directory for mongodb container and here where difining the databse dir
+volumes:
+  casesPrice:
+    # external: true
+    # when usin external: true then we should create the volumes maniual using :docker volume create dir-name command
+    # using the data base casesPrice directory
+
+
+
+
+
+
+

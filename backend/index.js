@@ -8,17 +8,12 @@ app.use(express.json());
 const PORT = process.env.PORT;
 require("./controller/getData");
 
-const caseRouter = require("./route/caseData");
-const userRouter = require("./route/users");
+const caseRouter = require("./routes/caseData");
+const userRouter = require("./routes/users");
 
 app.use("/cases", caseRouter);
 app.use("/users", userRouter);
-
-app.listen(PORT || 5000, () => {
-  console.log(`server listen to PORT ${PORT}`);
-});
-
-mongoose.connect(process.env.DB_URI).then(
+mongoose.connect(process.env.DB_URL).then(
   () => {
     console.log("DB connected");
   },
@@ -27,3 +22,7 @@ mongoose.connect(process.env.DB_URI).then(
   }
 );
 module.exports = app;
+
+app.listen(PORT || 5000, () => {
+  console.log(`server listen to PORT ${PORT}`);
+});

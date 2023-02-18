@@ -1,8 +1,8 @@
 import "./App.css";
 
-import Case from "./component/Case/Index";
-import Navbar from "./component/NavBar/Index";
-import Login from "./component/Login/Index";
+import Case from "./components/Case/Index";
+import Navbar from "./components/NavBar/Index";
+import Login from "./components/Login/Index";
 
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";

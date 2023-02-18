@@ -21,7 +21,7 @@ const Register = ({}) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/users",
+        "https://steam-bot.onrender.com//users",
         {
           userName,
           passwordOne,

@@ -34,18 +34,18 @@ io.on("connection", (socket) => {
 let index = 0;
 const getData = async (category) => {
   try {
-    const responce = await axios.get(
+    const response = await axios.get(
       `https://steamcommunity.com/market/priceoverview/?appid=730&currency=1&market_hash_name=${category}%20Case`
     );
-    if (responce.data.success) {
+    if (response.data.success) {
       ++index;
       if (index === categories.length) {
         
         index = 0;
       }
-      responce.data.category = category;
+      response.data.category = category;
 
-      const newCase = new caseModel(responce.data);
+      const newCase = new caseModel(response.data);
       const data = await newCase.save();
       if (true) {
         io.emit("data", data);
