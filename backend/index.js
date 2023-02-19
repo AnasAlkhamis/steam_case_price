@@ -13,7 +13,7 @@ const userRouter = require("./routes/users");
 
 app.use("/cases", caseRouter);
 app.use("/users", userRouter);
-mongoose.connect(process.env.DB_URL).then(
+mongoose.connect("mongodb+srv://anas:7LMWWTWpqfIZLZ8w@cluster0.zc8ky.mongodb.net/?retryWrites=true&w=majority").then(
   () => {
     console.log("DB connected");
   },

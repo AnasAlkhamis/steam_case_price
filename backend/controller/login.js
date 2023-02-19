@@ -33,7 +33,7 @@ const login = (req, res) => {
         // const options = {
         //   expiresIn: "60m",
         // };
-        const token = await jwt.sign(payload, process.env.SECRET);
+        const token = await jwt.sign(payload, process.env.SECRET || "CS20Chroma");
         res.status(200).json({
           success: true,
           message: `Valid login credentials`,

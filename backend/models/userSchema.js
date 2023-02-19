@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const SALT = Number(process.env.SALT);
+const SALT = Number(process.env.SALT) || 10;
 userSchema.pre("save", async function () {
   this.userName = this.userName.toLowerCase();
   this.passwordOne = await bcrypt.hash(this.passwordOne, SALT);
