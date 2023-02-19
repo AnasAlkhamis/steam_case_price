@@ -13,14 +13,16 @@ const userRouter = require("./routes/users");
 
 app.use("/cases", caseRouter);
 app.use("/users", userRouter);
-mongoose.connect("mongodb+srv://anas:7LMWWTWpqfIZLZ8w@cluster0.zc8ky.mongodb.net/?retryWrites=true&w=majority").then(
-  () => {
+mongoose
+  .connect(
+    "mongodb+srv://anas:7LMWWTWpqfIZLZ8w@cluster0.zc8ky.mongodb.net/?retryWrites=true&w=majority"
+  )
+  .then(() => {
     console.log("DB connected");
-  },
-  (err) => {
-    console.log("err", err);
-  }
-);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 module.exports = app;
 
 app.listen(PORT || 5000, () => {
