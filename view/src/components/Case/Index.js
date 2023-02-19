@@ -4,13 +4,13 @@ import {
   setData,
   addData,
   deleteAllData,
-} from "../../component/redux/reducers/data";
+} from "../redux/reducers/data";
 import { useSelector, useDispatch } from "react-redux";
 import Popup from "../confirmPopup/Index";
 import { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 import Register from "../registerPopup";
-const socket = io.connect("http://localhost:9800");
+const socket = io.connect("https://steam-bot.onrender.com/");
 const Case = () => {
   const { token, showRegister } = useSelector((state) => {
     return {
@@ -38,7 +38,7 @@ const Case = () => {
    */
   const removeData = async () => {
     try {
-      const res = await axios.delete("https://steam-bot.onrender.com//cases", {
+      const res = await axios.delete("https://steam-bot.onrender.com/cases", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -58,7 +58,7 @@ const Case = () => {
    */
   const getAllCasesData = async () => {
     try {
-      const response = await axios.get(`https://steam-bot.onrender.com//cases/all`, {
+      const response = await axios.get(`https://steam-bot.onrender.com/cases/all`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

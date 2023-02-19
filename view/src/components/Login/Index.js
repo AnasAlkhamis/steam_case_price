@@ -29,7 +29,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("https://steam-bot.onrender.com//users/login", {
+      const res = await axios.post("https://steam-bot.onrender.com/users/login", {
         userName,
         passwordOne,
         passwordTwo,
