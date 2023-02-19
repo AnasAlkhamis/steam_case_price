@@ -29,11 +29,14 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("https://steam-bot.onrender.com/users/login", {
-        userName,
-        passwordOne,
-        passwordTwo,
-      });
+      const res = await axios.post(
+        "https://steam-bot.onrender.com/users/login",
+        {
+          userName,
+          passwordOne,
+          passwordTwo,
+        }
+      );
       if (res.data.success) {
         dispatch(login(res.data.token));
         setMessage("");
@@ -50,11 +53,14 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("https://steam-bot.onrender.com//users/register", {
-        userName,
-        passwordOne,
-        passwordTwo,
-      });
+      const res = await axios.post(
+        "https://steam-bot.onrender.com//users/register",
+        {
+          userName,
+          passwordOne,
+          passwordTwo,
+        }
+      );
       if (res.data) {
         console.log(res.data);
         setMessage("");
@@ -102,11 +108,7 @@ const Login = () => {
       <div className="Form">
         <form
           onSubmit={(e) => {
-            if (check) {
-              loginUser(e);
-            } else {
-              register(e);
-            }
+            loginUser(e);
           }}
         >
           <input
