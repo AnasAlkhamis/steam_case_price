@@ -1,16 +1,12 @@
 import axios from "axios";
 import Charts from "../Chart/Index";
-import {
-  setData,
-  addData,
-  deleteAllData,
-} from "../redux/reducers/data";
+import { setData, addData, deleteAllData } from "../redux/reducers/data";
 import { useSelector, useDispatch } from "react-redux";
 import Popup from "../confirmPopup/Index";
 import { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 import Register from "../registerPopup";
-const socket = io.connect("https://steam-bot.onrender.com/");
+const socket = io.connect("https://steam-bot.onrender.com/io");
 const Case = () => {
   const { token, showRegister } = useSelector((state) => {
     return {
@@ -23,6 +19,7 @@ const Case = () => {
   /* Listening to the data from the server. */
   useEffect(() => {
     socket.on("data", (data) => {
+      console.log(data);
       dispatch(addData(data));
     });
 
@@ -58,11 +55,14 @@ const Case = () => {
    */
   const getAllCasesData = async () => {
     try {
-      const response = await axios.get(`https://steam-bot.onrender.com/cases/all`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        `https://steam-bot.onrender.com/cases/all`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (response) {
         dispatch(setData(response.data.cases));
       }
