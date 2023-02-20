@@ -5,6 +5,7 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 app.use(express.json());
+
 const PORT = process.env.PORT;
 require("./controller/getData");
 
@@ -23,8 +24,10 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-module.exports = app;
 
 app.listen(PORT || 5000, () => {
   console.log(`server listen to PORT ${PORT}`);
 });
+
+require("./controller/getData");
+

@@ -1,7 +1,12 @@
 const caseModel = require("../models/caseSchema");
 const axios = require("axios");
-const io = require("../socket_server");
-
+const server = require("../index");
+const { Server } = require("socket.io");
+const io = new Server({
+  cors: {
+    origin: "*",
+  },
+});
 const categories = [
   "Snakebite",
   "Fracture",
@@ -40,7 +45,6 @@ const getData = async (category) => {
     if (response.data.success) {
       ++index;
       if (index === categories.length) {
-        
         index = 0;
       }
       response.data.category = category;
