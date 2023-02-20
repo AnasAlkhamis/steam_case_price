@@ -124,13 +124,13 @@ const Charts = () => {
                     responsive: true,
                     plugins: {
                       legend: {
-                        position: "top",
+                        position: "left",
                       },
                     },
                   }}
                   data={{
                     labels: ele.map((data) => {
-                      return `${data.createdAt.split("T")[0]}  ${
+                      return `${data.createdAt.split(".")[0]}, ${
                         data.median_price
                       }`;
                     }),
@@ -145,7 +145,7 @@ const Charts = () => {
                       },
                     ],
                   }}
-                  height={65}
+                  height={70}
                 />
               </div>
             </li>
