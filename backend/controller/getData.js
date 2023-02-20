@@ -28,7 +28,7 @@ let connected;
 priceIo.on("connection", (socket) => {
   connected = true;
   socket.on("disconnect", () => {
-    connected = false;
+    
   });
 });
 let index = 0;
@@ -49,7 +49,7 @@ const getData = async (category) => {
       const newCase = new caseModel(response.data);
 
       const data = await newCase.save();
-      if (true) {
+      if (connected) {
         priceIo.emit("data", data);
         console.log(data);
       }

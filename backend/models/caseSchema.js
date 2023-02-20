@@ -6,6 +6,6 @@ const caseSchema = new mongoose.Schema({
   volume: { type: String, required: true },
   median_price: { type: String, required: true },
   category: { type: String },
-  createdAt: { type: String },
+  createdAt: { type: Date },
 });
 module.exports = mongoose.model("Case", caseSchema);
