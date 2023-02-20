@@ -64,4 +64,4 @@ const getData = async (category) => {
 
 setInterval(() => {
   getData(categories[index]);
-}, 6000);
+}, 12000);
