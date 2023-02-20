@@ -49,12 +49,15 @@ const getData = async (category) => {
       const newCase = new caseModel(response.data);
 
       const data = await newCase.save();
+      console.log(data);
+
       if (connected) {
         priceIo.emit("data", data);
         console.log(data);
       }
     }
   } catch (error) {
+    console.log(error);
     ++index;
     if (index === categories.length) {
       index = 0;
@@ -64,4 +67,4 @@ const getData = async (category) => {
 
 setInterval(() => {
   getData(categories[index]);
-}, 12000);
+}, 24000);
