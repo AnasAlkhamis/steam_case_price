@@ -1,13 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const http = require("http");
 require("dotenv").config();
 const cors = require("cors");
 const app = express();
+const server = http.Server(app);
 app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT;
-require("./controller/getData");
 
 const caseRouter = require("./routes/caseData");
 const userRouter = require("./routes/users");
@@ -25,9 +26,17 @@ mongoose
     console.log(err);
   });
 
-app.listen(PORT || 5000, () => {
+server.listen(PORT || 5000, () => {
   console.log(`server listen to PORT ${PORT}`);
 });
 
-require("./controller/getData");
+const socket = require("socket.io");
+const io = socket(server, {
+  cors: {
+    origin: "*",
+  },
+});
 
+const priceIo = io.of("/io");
+module.exports = {priceIo};
+require("./controller/getData");

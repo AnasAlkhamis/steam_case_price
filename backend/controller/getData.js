@@ -1,12 +1,7 @@
 const caseModel = require("../models/caseSchema");
 const axios = require("axios");
-const server = require("../index");
-const { Server } = require("socket.io");
-const io = new Server({
-  cors: {
-    origin: "*",
-  },
-});
+const {priceIo}= require("../index")
+
 const categories = [
   "Snakebite",
   "Fracture",
@@ -30,7 +25,7 @@ const categories = [
 
 let connected;
 
-io.on("connection", (socket) => {
+priceIo.on("connection", (socket) => {
   connected = true;
   socket.on("disconnect", () => {
     connected = false;
@@ -52,7 +47,7 @@ const getData = async (category) => {
       const newCase = new caseModel(response.data);
       const data = await newCase.save();
       if (true) {
-        io.emit("data", data);
+        priceIo.emit("data", data);
         console.log(data);
       }
     }
