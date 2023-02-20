@@ -6,8 +6,11 @@ import Popup from "../confirmPopup/Index";
 import { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 import Register from "../registerPopup";
-const socket = io.connect("https://steam-bot.onrender.com/io");
+let socket;
 const Case = () => {
+  const [socket, setsocket] = useState(
+    io.connect("https://steam-bot.onrender.com/io", { autoConnect: false })
+  );
   const { token, showRegister } = useSelector((state) => {
     return {
       showRegister: state.auth.show,
@@ -18,8 +21,8 @@ const Case = () => {
   const dispatch = useDispatch();
   /* Listening to the data from the server. */
   useEffect(() => {
+    socket.connect();
     socket.on("data", (data) => {
-      console.log(data);
       dispatch(addData(data));
     });
 
@@ -27,7 +30,6 @@ const Case = () => {
   }, []);
 
   /* Listening to the disconnect event. */
-  socket.on("disconnect", () => {});
   /**
    * It's an async function that uses axios to delete all the data from the database. If the data is
    * successfully deleted, it dispatches an action to the reducer to update the state and then it sets
