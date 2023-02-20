@@ -1,6 +1,6 @@
 const caseModel = require("../models/caseSchema");
 const axios = require("axios");
-const {priceIo}= require("../index")
+const { priceIo } = require("../index");
 
 const categories = [
   "Snakebite",
@@ -45,6 +45,8 @@ const getData = async (category) => {
       response.data.category = category;
 
       const newCase = new caseModel(response.data);
+      newCase.createdAt = new Date(0);
+      newCase.updatedAt = new Date(0);
       const data = await newCase.save();
       if (true) {
         priceIo.emit("data", data);
