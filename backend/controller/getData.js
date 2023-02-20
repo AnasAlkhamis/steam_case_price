@@ -45,8 +45,8 @@ const getData = async (category) => {
       response.data.category = category;
 
       const newCase = new caseModel(response.data);
-      newCase.createdAt = new Date(0);
-      newCase.updatedAt = new Date(0);
+      newCase.createdAt = new Date();
+      newCase.updatedAt = new Date();
       const data = await newCase.save();
       if (true) {
         priceIo.emit("data", data);
