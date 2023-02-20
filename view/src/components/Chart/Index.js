@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+
 import { useSelector, useDispatch } from "react-redux";
 import { deleteData } from "../redux/reducers/data";
 import Popup from "../confirmPopup/Index";
@@ -124,7 +125,7 @@ const Charts = () => {
                     responsive: true,
                     plugins: {
                       legend: {
-                        position: "left",
+                        position: "top" ,
                       },
                     },
                   }}
@@ -139,6 +140,7 @@ const Charts = () => {
                         label: categories[idx],
                         borderColor: "rgb(54, 51, 51)",
                         backgroundColor: "rgb(54, 51, 51)",
+                        pointHitRadius: "1000",
                         data: ele.map((data) => {
                           return Number(data.median_price.slice(1));
                         }),
