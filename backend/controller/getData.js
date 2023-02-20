@@ -43,12 +43,11 @@ const getData = async (category) => {
         index = 0;
       }
       response.data.category = category;
-
-      const newCase = new caseModel(response.data);
-      newCase.createdAt = new Date().toLocaleString("en-US", {
+      response.data.createdAt = new Date().toLocaleString("en-US", {
         timeZone: "Asia/Amman",
       });
-      newCase.updatedAt = false;
+      const newCase = new caseModel(response.data);
+
       const data = await newCase.save();
       if (true) {
         priceIo.emit("data", data);
