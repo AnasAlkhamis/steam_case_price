@@ -131,7 +131,7 @@ const Charts = () => {
                   }}
                   data={{
                     labels: ele.map((data) => {
-                      return `${data.createdAt.split(" G")[0]}, ${
+                      return `${data.createdAt.split(".")[0]}, ${
                         data.median_price
                       }`;
                     }),
