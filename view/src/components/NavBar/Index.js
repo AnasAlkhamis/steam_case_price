@@ -41,9 +41,17 @@ const Navbar = () => {
               }}
               key={idx}
             >
-              <span className="link">
-                {idx + 1}_{ele}
-              </span>
+              <div className="side_bar_box">
+                <span className="link">
+                  {idx + 1}_{ele}{" "}
+                </span>
+                <a
+                  href={`https://steamcommunity.com/market/listings/730/${ele}%20Case`}
+                  target="_blank"
+                >
+                  Link
+                </a>
+              </div>
             </li>
           );
         })}
