@@ -11,7 +11,7 @@ body {
 }
 .App {
   display: grid;
-  grid-template-columns: 200px 100%;
+  grid-template-columns: 200px calc(100vw - 220px);
   /* gap: 1vw; */
   grid-template-rows: 100%;
 
