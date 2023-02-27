@@ -12,21 +12,19 @@ const PORT = process.env.PORT;
 
 const caseRouter = require("./routes/caseData");
 const userRouter = require("./routes/users");
-
+console.log(process.env.DB_URL);
 app.use("/cases", caseRouter);
 app.use("/users", userRouter);
 mongoose
-  .connect(
-    "mongodb+srv://anas:7LMWWTWpqfIZLZ8w@cluster0.zc8ky.mongodb.net/?retryWrites=true&w=majority"
-  )
+  .connect(process.env.DB_URL)
   .then(() => {
-    console.log("DB connected");
+    console.log("Connected To DB");
   })
   .catch((err) => {
     console.log(err);
   });
-
-server.listen(PORT || 5000, () => {
+console.log(process.env);
+server.listen(PORT, () => {
   console.log(`server listen to PORT ${PORT}`);
 });
 
@@ -38,5 +36,5 @@ const io = socket(server, {
 });
 
 const priceIo = io.of("/io");
-module.exports = {priceIo};
+module.exports = { priceIo };
 require("./controller/getData");

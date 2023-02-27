@@ -1,0 +1,41 @@
+
+# -------------------------------------
+# Creating a container for  backend + database.
+# use the last version of docker-compose.
+version: "3.8"
+services:
+  backend:
+    depends_on:
+      - db
+    # create an image for the backend
+    build: ./
+    restart: always
+    ports:
+      - 5000:5000
+    environment:
+      DB_URL: mongodb://db:27017/DB_CasesPrice
+      SECRET: CS20Chroma
+      SALT: 10
+      PORT: 5000
+
+  db:
+    # create an image for the database
+    image: mongo:4.0-xenial
+    ports:
+      - 0.0.0.0:27017:27017
+    restart: always
+    volumes:
+      # volumes where we create a directory inside the container where the database saves all data
+      - casesPrice:/data/db #create directory for mongodb container and here where difining the databse dir
+volumes:
+  casesPrice:
+    # external: true
+    # when usin external: true then we should create the volumes maniual using :docker volume create dir-name command
+    # using the data base casesPrice directory
+
+
+
+
+
+
+

@@ -10,4 +10,4 @@ ENV PORT 5000
 EXPOSE $PORT
 
 # comand it'll run ower app
-CMD ["npm","run","dev"]
+CMD ["npm","start"]

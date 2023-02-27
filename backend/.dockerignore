@@ -1,6 +1,0 @@
-node_modules
-Dockerfile
-.dockeregnore
-.git
-.gitegnore
-npm-debug.log

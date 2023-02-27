@@ -27,9 +27,7 @@ let connected;
 
 priceIo.on("connection", (socket) => {
   connected = true;
-  socket.on("disconnect", () => {
-    
-  });
+  socket.on("disconnect", () => {});
 });
 let index = 0;
 const getData = async (category) => {
@@ -68,3 +66,15 @@ const getData = async (category) => {
 setInterval(() => {
   getData(categories[index]);
 }, 30000);
+
+/*
+market_url = ("https://steamcommunity.com/market/search/render/?
+    category_730_Type%5B%5D=tag_CSGO_Type_Case
+    "&norender=1"
+    "&count=100"
+    "&sort_column=name"
+    "&sort_dir=asc"
+    "&currency={currency}"
+    "&start={start}")
+https://steamapis.com/docs/market#cards
+    */
