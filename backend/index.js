@@ -16,7 +16,7 @@ console.log(process.env.DB_URL);
 app.use("/cases", caseRouter);
 app.use("/users", userRouter);
 mongoose
-  .connect(process.env.DB_URL)
+  .connect(process.env.DB_URL||"mongodb+srv://anas:4PUdEStlMfqYv6mX@cluster0.zc8ky.mongodb.net/?retryWrites=true&w=majority")
   .then(() => {
     console.log("Connected To DB");
   })
